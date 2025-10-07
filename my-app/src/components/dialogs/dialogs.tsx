@@ -1,15 +1,13 @@
 import { cn } from "@/lib/utils"
 
 interface DialogsProps {
-  open: boolean;
-  defaultOpen: boolean;
-  children: string;
-  closeMethod: () => void;
+  open: boolean
+  children: string
+  closeMethod: () => void
 }
 
 export const Dialogs = ({ 
   open,
-  defaultOpen,
   children,
   closeMethod
 }: DialogsProps) => {

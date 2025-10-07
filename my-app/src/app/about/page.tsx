@@ -29,9 +29,8 @@ export default function about() {
       <Dialogs 
         open={open} 
         closeMethod={() => setOpen(false)}
-        defaultOpen
       >
-        sss
+        content
       </Dialogs>
     </div>
   ) 

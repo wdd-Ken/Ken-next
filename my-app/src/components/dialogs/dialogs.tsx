@@ -3,13 +3,13 @@ import { cn } from "@/lib/utils"
 interface DialogsProps {
   open: boolean
   children: string
-  closeMethod: () => void
+  method: (open: boolean) => void
 }
 
 export const Dialogs = ({ 
   open,
   children,
-  closeMethod
+  method
 }: DialogsProps) => {
 
   return (
@@ -39,7 +39,7 @@ export const Dialogs = ({
           'top-2',
           'right-2'
         )}
-          onClick={closeMethod}
+          onClick={() => {method(false)}}
         >x</div>
       </div>
       }

@@ -4,7 +4,9 @@ import { Dialogs } from "@/components/dialogs";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 
-export default function about() {
+// 輸出元件需要大寫
+export default function About() {
+
   const [open, setOpen]= useState(false)
 
   return (
@@ -28,7 +30,8 @@ export default function about() {
       </div>
       <Dialogs 
         open={open} 
-        method={setOpen}
+        onOpenChange={setOpen}
+        defaultOpen
       >
         content
       </Dialogs>

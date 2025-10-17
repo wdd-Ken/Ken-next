@@ -1,20 +1,35 @@
 import { cn } from "@/lib/utils"
+import { useState } from "react"
 
 interface DialogsProps {
   open: boolean
   children: string
-  method: (open: boolean) => void
+  onOpenChange: (open: boolean) => void
+  defaultOpen?: boolean
 }
 
 export const Dialogs = ({ 
   open,
   children,
-  method
+  onOpenChange,
+  defaultOpen
 }: DialogsProps) => {
+
+  const [innerOpen, setInnerOpen] = useState(defaultOpen)
+
+  const isControlled = open !== undefined
+  const openState = isControlled ? open : innerOpen
+  
+  const handleChange = (next: boolean) => {
+    if (!isControlled) setInnerOpen(next)
+    onOpenChange?.(next)
+  }
+
+  if (!openState) return null
 
   return (
     <>
-      { open && <div className={cn(
+      <div className={cn(
         'p-5',
         'w-2xl',
         'h-96',
@@ -39,10 +54,9 @@ export const Dialogs = ({
           'top-2',
           'right-2'
         )}
-          onClick={() => {method(false)}}
+          onClick={() => {handleChange(false)}}
         >x</div>
       </div>
-      }
     </>
   )
 }

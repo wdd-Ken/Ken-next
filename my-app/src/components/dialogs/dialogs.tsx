@@ -1,60 +1,73 @@
 import { cn } from "@/lib/utils"
+import { useEffect } from "react"
 import { useState } from "react"
 
 interface DialogsProps {
-  open: boolean
-  children: string
-  onOpenChange: (open: boolean) => void
+  open?: boolean
+  onOpenChange?: (open: boolean) => void
   defaultOpen?: boolean
+  children: string
 }
 
 export const Dialogs = ({ 
-  open,
-  children,
+  open: controlledOpen,
   onOpenChange,
-  defaultOpen
+  defaultOpen = false,
+  children,
 }: DialogsProps) => {
 
   const [innerOpen, setInnerOpen] = useState(defaultOpen)
 
-  const isControlled = open !== undefined
-  const openState = isControlled ? open : innerOpen
-  
-  const handleChange = (next: boolean) => {
-    if (!isControlled) setInnerOpen(next)
-    onOpenChange?.(next)
-  }
+  const isControlled = controlledOpen !== undefined
 
-  if (!openState) return null
+  const actualOpen = isControlled ? controlledOpen : innerOpen
+
+  const handleClose = () => {
+    if (isControlled) {
+      // 若父層控制 → 通知父層關閉
+      onOpenChange?.(false)
+    } else {
+      // 若沒父層控制 → 自行關閉
+      setInnerOpen(false)
+    }
+  }
+  
+  useEffect(() => {
+    if (!isControlled && defaultOpen) {
+      setInnerOpen(true)
+    }
+  }, [defaultOpen, isControlled])
+
+  if (!actualOpen) return null
 
   return (
     <>
       <div className={cn(
         'p-5',
+        'absolute',
         'w-2xl',
         'h-96',
-        'shadow-2xl',
         'rounded-3xl',
-        'absolute',
+        'shadow-2xl',
         'bg-violet-300',
         'text-stone-50'
       )}>
         {children}
         <div className={cn(
           'p-0.5',
-          'w-6',
-          'rounded-xs',
+          'absolute',
+          'top-2',
+          'right-2',
           'flex',
           'justify-center',
           'items-center',
+          'w-6',
+          'rounded-xs',
+          'cursor-pointer',
           'bg-violet-100',
           'text-stone-950',
-          'cursor-pointer',
-          'absolute',
-          'top-2',
-          'right-2'
         )}
-          onClick={() => {handleChange(false)}}
+          onClick={() => {handleClose()}}
         >x</div>
       </div>
     </>

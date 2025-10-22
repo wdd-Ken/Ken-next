@@ -29,8 +29,8 @@ export default function About() {
         <p>Click me !</p>
       </div>
       <Dialogs 
-        open={open} 
-        onOpenChange={setOpen}
+        // open={open} 
+        // onOpenChange={setOpen}
         defaultOpen
       >
         content

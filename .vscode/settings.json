@@ -1,0 +1,14 @@
+{
+  "editor.maxTokenizationLineLength": 50000, // 增加最大 token 化行長度，避免大檔案無法編輯
+  "editor.insertSpaces": false, // 用 tab，不用空格
+  "editor.tabSize": 2, // tab 顯示成 4 格
+  "editor.detectIndentation": false, // 關閉自動偵測縮排，避免被別人檔案影響
+  "editor.formatOnSave": true, // 儲存時自動格式化
+  "editor.defaultFormatter": "esbenp.prettier-vscode", // 指定使用 Prettier
+  "files.trimTrailingWhitespace": true,
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "cSpell.words": ["brandsblocks", "Embla"], // 自動清除行尾空白
+  "prettier.semi": false
+}

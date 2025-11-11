@@ -3,6 +3,8 @@
 import { Cards } from "@/components/cards"
 import { cn } from "@/lib/utils"
 import { useState } from "react"
+import * as motion from "motion/react-client"
+import { stagger } from "motion"
 
 export default function Motion() {
 
@@ -40,6 +42,39 @@ export default function Motion() {
 
 	const [isVisiable, setVisiable] = useState(true)
 
+	const container = {
+		hidden: {
+			opacity: 0
+		},
+		show: {
+			opacity: 1,
+			transition: {
+				delayChildren: stagger(0.2),
+			}
+		}
+	}
+
+	const item = {
+		hidden: {
+			opacity: 0,
+			y: -15,
+		},
+		show: {
+			opacity: 1,
+			y: 0,
+			transition: {
+				duration: 0.8
+			}
+		},
+		exit: {
+			opacity: 0,
+			y: 15,
+			transition: {
+				duration: 0.5
+			}
+		}
+	}
+
 	return (
 		<>
 			<div className={cn(
@@ -59,13 +94,17 @@ export default function Motion() {
 				'grid-cols-[50px_repeat(24,1fr)_50px]',
 				'font-(family-name:--font-jost)',
 			)}>
-				<div className={cn(
-					'col-[5/-5]',
-					'flex',
-					'flex-wrap',
-					'gap-x-[7.8125vw]',
-					'gap-y-[1.5625vw]'
-				)}>
+				<motion.div
+					variants={container}
+					initial="hidden"
+					animate="show"
+					className={cn(
+						'col-[2/-2] md:col-[3/-3] lg:col-[4/-4] xl:col-[5/-5]',
+						'flex',
+						'flex-wrap',
+						'gap-x-[5.2083vw]',
+						'gap-y-[30px] lg:gap-y-[1.5625vw]',
+					)}>
 					{
 						datas.map(({
 							name,
@@ -74,16 +113,19 @@ export default function Motion() {
 							text
 						}, i) => {
 							return (
-								<div className={cn(
-									'w-[calc((100%-15.625vw)/3)]',
-								)} key={i}>
-									<Cards name={name} src={pic} classs={classs} texts={text} isvisiable={isVisiable} />
+								<div
+									className={cn(
+										'w-full md:w-[calc((100%-5.2083vw)/2)] lg:w-[calc((100%-10.4166vw)/3)]',
+									)} key={i}>
+									<motion.div variants={item} >
+										<Cards name={name} src={pic} classs={classs} texts={text} isvisiable={isVisiable} />
+									</motion.div>
 								</div>
 							)
 						})
 					}
-				</div>
-			</div>
+				</motion.div >
+			</div >
 		</>
 	)
 }
